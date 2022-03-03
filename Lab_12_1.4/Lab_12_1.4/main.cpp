@@ -17,7 +17,7 @@ int main()
 {
 	srand(time(0));
 	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);	
+	SetConsoleOutputCP(1251);
 	
 	
 	StudentGroup sg;

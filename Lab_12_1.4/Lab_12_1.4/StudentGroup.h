@@ -22,11 +22,11 @@ public:
 	void Add(Student student);
 	void Delete(size_t index);
 
-	size_t FindByName(string name) const;
+	size_t FindIndexByName(string name) const;
 	size_t FindIndexByGroup(string group) const;
 	size_t FindIndexByAvgMark(double avg_mark) const;
 
-	void Sort(bool descending = true, int choice = 1);
+	void Sort(bool descending, int choice);
 
 	void Display() const;
 private:

@@ -54,7 +54,7 @@ void Student::Read()
 
 void Student::Display() const
 {
-    cout << "Студент: " << name << ", Група: " << group << ", Середня оцінка: " << avg_mark << endl;
+    cout << toString() << endl;
 }
 
 bool Student::Init(string name, string group, double avg_mark)
