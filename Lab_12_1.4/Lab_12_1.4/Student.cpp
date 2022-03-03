@@ -37,19 +37,18 @@ void Student::Read()
 {
     string name, group;
     double avg_mark;
+    
+    cin.get();
     do {
-        cout << "Введіть ім'я та прізвище: ";
+        cout << "Введіть прізвище та ім'я: ";
         getline(cin, name);
-        cout << endl;
-
+        
         cout << "Введіть групу студента: ";
         getline(cin, group);
-        cout << endl;
-
+        
         cout << "Введіть середню оцінку з предметів: ";
         cin >> avg_mark;
-        cout << endl;
-
+        
     } while (!Init(name, group, avg_mark));
 }
 
@@ -64,7 +63,7 @@ bool Student::Init(string name, string group, double avg_mark)
     setGroup(group);
     setAvgMark(avg_mark);
 
-    return this->avg_mark > 0 && this->avg_mark < 5;
+    return this->avg_mark > 0 && this->avg_mark <= 5;
 }
 
 string Student::toString() const
@@ -72,4 +71,21 @@ string Student::toString() const
     stringstream ss;
     ss << "Студент: " << name << ", Група: " << group << ", Середня оцінка: " << avg_mark;
     return ss.str();
+}
+
+int compare(const Student& s1, const Student& s2, bool descending, int choice)
+{
+    if (choice == 1) {
+        if (s1.getName() < s2.getName()) return descending ? -1 : 1;
+        if (s1.getName() > s2.getName()) return descending ? 1 : -1;
+    }
+    if (choice == 2) {
+        if (s1.getGroup() < s2.getGroup()) return descending ? -1 : 1;
+        if (s1.getGroup() > s2.getGroup()) return descending ? 1 : -1;
+    }
+    if (choice == 3) {
+        if (s1.getAvgMark() < s2.getAvgMark()) return descending ? -1 : 1;
+        if (s1.getAvgMark() > s2.getAvgMark()) return descending ? 1 : -1;
+    }
+    return 0;
 }

@@ -1,8 +1,9 @@
 // main.cpp
 #include <iostream>
+#include <iomanip>
 #include <Windows.h>
 #include "StudentGroup.h"
-#include "MakeStudent.h"
+#include "Menu.h"
 using namespace std;
 
 Student makeStudent(string name, string group, double avg_mark) {
@@ -12,21 +13,17 @@ Student makeStudent(string name, string group, double avg_mark) {
 	return s;
 }
 
-int main() {
+int main()
+{
 	srand(time(0));
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);	
+	
+	
+	StudentGroup sg;
 
-	//  клас Student
-	Student s1;
-	s1.Init("Іван Іванов", "ФЛ-31", 4.1);
-	s1.Display();
+	MainMenu(sg);
 
-	Student s2 = makeStudent("Петро Петрович", "IT-42", 3.18);
-	s2.Display();
-
-	StudentGroup studentGroup;
-	studentGroup.Init(20);
-
+	sg.Free();
 	return 0;
 }

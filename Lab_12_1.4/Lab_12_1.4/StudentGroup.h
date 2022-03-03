@@ -5,8 +5,8 @@
 
 class StudentGroup
 {
-	size_t size;
-	Student* students;
+	size_t size = 0;
+	Student* students = nullptr;
 public:
 	size_t getSize() const;
 	Student getStudent(size_t index) const;
@@ -19,6 +19,17 @@ public:
 	void Init(size_t size);
 	void Free();
 
+	void Add(Student student);
+	void Delete(size_t index);
+
+	size_t FindByName(string name) const;
+	size_t FindIndexByGroup(string group) const;
+	size_t FindIndexByAvgMark(double avg_mark) const;
+
+	void Sort(bool descending = true, int choice = 1);
+
 	void Display() const;
+private:
+	void QuickSort(int left, int right, bool descending, int choice);
 };
 
