@@ -3,6 +3,16 @@
 #include <iostream>
 #include <sstream>
 
+int findDig(int x, int index)
+{
+    int length = 0;
+    int xx = x;
+    while (xx /= 10) length++;
+
+    int y = pow(10, abs(index - length));
+    return (x / y) - ((x / (y * 10)) * 10);
+}
+
 string Student::getName() const
 {
     return name;
@@ -48,7 +58,7 @@ void Student::Read()
         
         cout << "¬вед≥ть середню оц≥нку з предмет≥в: ";
         cin >> avg_mark;
-        
+        cin.get();
     } while (!Init(name, group, avg_mark));
 }
 
@@ -73,19 +83,131 @@ string Student::toString() const
     return ss.str();
 }
 
-int compare(const Student& s1, const Student& s2, bool descending, int choice)
+bool lessthan(const Student& s1, const Student& s2, int flag)
 {
-    if (choice == 1) {
-        if (s1.getName() < s2.getName()) return descending ? -1 : 1;
-        if (s1.getName() > s2.getName()) return descending ? 1 : -1;
+    int dig = findDig(flag, 0);
+    switch (dig)
+    {
+    case 1: {
+        int dig2 = findDig(flag, 1);
+        if (dig2 == 2)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.name < s2.name || s1.name == s2.name && s1.group < s2.group || s1.name == s2.name && s1.group == s2.group && s1.avg_mark < s2.avg_mark;
+            return s1.name < s2.name || s1.name == s2.name && s1.group < s2.group;
+        }
+        else if (dig2 == 3)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 1)
+                return s1.name < s2.name || s1.name == s2.name && s1.avg_mark < s2.avg_mark || s1.name == s2.name && s1.avg_mark == s2.avg_mark && s1.group < s2.group;
+            return s1.name < s2.name || s1.name == s2.name && s1.avg_mark < s2.avg_mark;
+        }
+        return s1.name < s2.name;
     }
-    if (choice == 2) {
-        if (s1.getGroup() < s2.getGroup()) return descending ? -1 : 1;
-        if (s1.getGroup() > s2.getGroup()) return descending ? 1 : -1;
+    case 2: {
+        int dig2 = findDig(flag, 1);
+        if (dig2 == 1)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.group < s2.group || s1.group == s2.group && s1.name < s2.name || s1.group == s2.group && s1.name == s2.name && s1.avg_mark < s2.avg_mark;
+            return s1.group < s2.group || s1.group == s2.group && s1.name < s2.name;
+        }
+        else if (dig2 == 3)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.group < s2.group || s1.group == s2.group && s1.avg_mark < s2.avg_mark || s1.group == s2.group && s1.avg_mark == s2.avg_mark && s1.name < s2.name;
+            return s1.group < s2.group || s1.group == s2.group && s1.avg_mark < s2.avg_mark;
+        }
+        return s1.group < s2.group;
     }
-    if (choice == 3) {
-        if (s1.getAvgMark() < s2.getAvgMark()) return descending ? -1 : 1;
-        if (s1.getAvgMark() > s2.getAvgMark()) return descending ? 1 : -1;
+    case 3: {
+        int dig2 = findDig(flag, 1);
+        if (dig2 == 1)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.avg_mark < s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.name < s2.name || s1.avg_mark == s2.avg_mark && s1.name == s2.name && s1.group < s2.group;
+            return s1.avg_mark < s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.name < s2.name;
+        }
+        else if (dig2 == 2)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.avg_mark < s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.group < s2.group || s1.avg_mark == s2.avg_mark && s1.group == s2.group && s1.name < s2.name;
+            return s1.avg_mark < s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.group < s2.group;
+        }
+        return s1.avg_mark < s2.avg_mark;
     }
-    return 0;
+
+    }
+    return true;
+    
+}
+
+bool greatthan(const Student& s1, const Student& s2, int flag)
+{
+    int dig = findDig(flag, 0);
+    switch (dig)
+    {
+    case 1: {
+        int dig2 = findDig(flag, 1);
+        if (dig2 == 2)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.name > s2.name || s1.name == s2.name && s1.group > s2.group || s1.name == s2.name && s1.group == s2.group && s1.avg_mark > s2.avg_mark;
+            return s1.name > s2.name || s1.name == s2.name && s1.group > s2.group;
+        }
+        else if (dig2 == 3)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 1)
+                return s1.name > s2.name || s1.name == s2.name && s1.avg_mark > s2.avg_mark || s1.name == s2.name && s1.avg_mark == s2.avg_mark && s1.group > s2.group;
+            return s1.name > s2.name || s1.name == s2.name && s1.avg_mark > s2.avg_mark;
+        }
+        return s1.name > s2.name;
+    }
+    case 2: {
+        int dig2 = findDig(flag, 1);
+        if (dig2 == 1)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.group > s2.group || s1.group == s2.group && s1.name > s2.name || s1.group == s2.group && s1.name == s2.name && s1.avg_mark > s2.avg_mark;
+            return s1.group > s2.group || s1.group == s2.group && s1.name > s2.name;
+        }
+        else if (dig2 == 3)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.group > s2.group || s1.group == s2.group && s1.avg_mark > s2.avg_mark || s1.group == s2.group && s1.avg_mark == s2.avg_mark && s1.name > s2.name;
+            return s1.group > s2.group || s1.group == s2.group && s1.avg_mark > s2.avg_mark;
+        }
+        return s1.group > s2.group;
+    }
+    case 3: {
+        int dig2 = findDig(flag, 1);
+        if (dig2 == 1)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.avg_mark > s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.name > s2.name || s1.avg_mark == s2.avg_mark && s1.name == s2.name && s1.group > s2.group;
+            return s1.avg_mark > s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.name > s2.name;
+        }
+        else if (dig2 == 2)
+        {
+            int dig3 = findDig(flag, 2);
+            if (dig3 == 3)
+                return s1.avg_mark > s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.group > s2.group || s1.avg_mark == s2.avg_mark && s1.group == s2.group && s1.name > s2.name;
+            return s1.avg_mark > s2.avg_mark || s1.avg_mark == s2.avg_mark && s1.group > s2.group;
+        }
+        return s1.avg_mark > s2.avg_mark;
+    }
+
+    }
+    return false;
 }

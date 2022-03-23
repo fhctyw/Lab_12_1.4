@@ -2,7 +2,6 @@
 #pragma once
 #include "Student.h"
 
-
 class StudentGroup
 {
 	size_t size = 0;
@@ -26,10 +25,10 @@ public:
 	size_t FindIndexByGroup(string group) const;
 	size_t FindIndexByAvgMark(double avg_mark) const;
 
-	void Sort(bool descending, int choice);
+	void Sort(int flag, const bool Up);
 
 	void Display() const;
 private:
-	void QuickSort(int left, int right, bool descending, int choice);
+	void QuickSort(int left, int right, int flag, const bool Up);
 };
 

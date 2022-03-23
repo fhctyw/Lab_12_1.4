@@ -102,9 +102,9 @@ size_t StudentGroup::FindIndexByAvgMark(double avg_mark) const
     return -1;
 }
 
-void StudentGroup::Sort(bool descending, int choise)
+void StudentGroup::Sort(int flag, const bool Up)
 {
-    QuickSort(0, getSize() - 1, descending, choise);
+    QuickSort(0, getSize() - 1, flag, Up);
 }
 
 void StudentGroup::Display() const
@@ -124,21 +124,21 @@ void StudentGroup::Display() const
     cout << right << defaultfloat;
 }
 
-void StudentGroup::QuickSort(int left, int right, bool descending, int choise)
+void StudentGroup::QuickSort(int left, int right, int flag, const bool Up)
 {
     int l = left, r = right;
     Student mid = students[(right + left) / 2];
-
+   
     while (l <= r)
     {
-        while (compare(students[l], mid, descending, choise) < 0) l++;
-        while (compare(students[r], mid, descending, choise) > 0) r--;
+        while (Up ? lessthan(students[l], mid, flag) : greatthan(students[l], mid, flag)) l++;
+        while (Up ? greatthan(students[r], mid, flag) : lessthan(students[r], mid, flag)) r--;
         if (l <= r) {
             swap(students[l], students[r]);
             l++;
             r--;
         }
     }
-    if (left < r) QuickSort(left, r, descending, choise);
-    if (right > l) QuickSort(l, right, descending, choise);
+    if (left < r) QuickSort(left, r, flag, Up);
+    if (right > l) QuickSort(l, right, flag, Up);
 }

@@ -21,6 +21,7 @@ public:
 	void Display() const;
 	bool Init(string name, string group, double avg_mark);
 	string toString() const;
+	
+	friend bool lessthan(const Student& s1, const Student& s2, int flag);
+	friend bool greatthan(const Student& s1, const Student& s2, int flag);
 };
-
-int compare(const Student& s1, const Student& s2, bool descending, int choice);

@@ -29,7 +29,7 @@ string group[14] {
 	"²Ê", "²Ò", "ÔË", "ÊÍ", "ÀĞ", "ÁÒ", "ÂÏ", "ÅÅ", "ÃÄ", "Ê²", "ÊÁ", "ÌÒ", "ÕÒ", "ÀÍ" 
 };
 
-Student makeStudentFromSample() {
+Student makeStudent() {
 	Student s;
 	
 	s.setName(name[rand() % 20]);

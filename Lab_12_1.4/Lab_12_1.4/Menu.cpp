@@ -1,8 +1,13 @@
+// Menu.cpp
 #include "Menu.h"
 #include "MakeStudent.h"
 
-char ShowSymol(bool b) {
-	return b ? 'V' : 'X';
+bool isGoodFlag(int flag)
+{
+	int length = 1;
+	while (flag /= 10) length++;
+	
+	return length == 3;
 }
 
 void FindMenu(const StudentGroup& sg)
@@ -59,7 +64,7 @@ void FindMenu(const StudentGroup& sg)
 	} while (choice != 0);
 }
 
-void SortMenuDescending(StudentGroup& sg, int _choise) {
+void SortMenuDescending(StudentGroup& sg, int _choice) {
 	int choice;
 	do {
 		cout << "Виберіть за спаданням/зростанням" << endl;
@@ -70,18 +75,10 @@ void SortMenuDescending(StudentGroup& sg, int _choise) {
 		cout << "choice: "; cin >> choice;
 		cin.get();
 
-		switch (choice)
-		{
-		case 1: {
-			sg.Sort(false, _choise);
-			break;
-		}
-		case 2: {
-			sg.Sort(true, _choise);
-			break;
-		}
-
-		}
+		if (choice == 1)
+			sg.Sort(_choice, false);
+		else if (choice == 2)
+			sg.Sort(_choice, true);
 
 		cout << endl;
 
@@ -90,51 +87,26 @@ void SortMenuDescending(StudentGroup& sg, int _choise) {
 }
 
 void SortMenu(StudentGroup& sg) {
-	int choice, _choice = 0;
-	bool f, s, t;
-	f = s = t = false;
+	int choice;
+	
 	do {
-		cout << "Виберіть критерій сорутвання" << endl;
-		cout << "1. За прізвищем та ім'ям   " << ShowSymol(f) << endl;
-		cout << "2. За групою		   " << ShowSymol(s) << endl;
-		cout << "3. За середньою оцінкою    " << ShowSymol(t) << endl;
-		cout << "4. Далі" << endl;
+		cout << "Виберіть критерій сорутвання" << endl
+			<< "Наприклад: 231" << endl
+			<< "2 - Перший" << endl
+			<< "3 - Другий" << endl
+			<< "1 - Третій" << endl;
+		cout << "1. За прізвищем та ім'ям" << endl;
+		cout << "2. За групою" << endl;
+		cout << "3. За середньою оцінкою" << endl;
 		cout << "0. Назад" << endl;
 
 		cout << "choice: "; cin >> choice;
 		cin.get();
 
-		switch (choice)
-		{
-		case 1: {
-			f = true;
-			_choice = choice;
-			s = t = false;
+		if (isGoodFlag(choice)) {
+			SortMenuDescending(sg, choice);
 			break;
 		}
-		case 2: {
-			s = true;
-			_choice = choice;
-			f = t = false;
-			break;
-		}
-		case 3: {
-			t = true;
-			_choice = choice;
-			f = s = false;
-			break;
-		}
-		case 4: {
-			if (_choice == 1 || _choice == 2 || _choice == 3) {
-				SortMenuDescending(sg, _choice);
-			}
-			break;
-		}
-
-		}
-
-		cout << endl;
-		if (choice == 4) break;
 	} while (choice != 0);
 }
 
@@ -178,9 +150,19 @@ void MainMenu(StudentGroup& sg)
 			cin.get();
 			cout << "Скільки студентів добавити: "; cin >> size;
 			for (size_t i = 0; i < size; i++) {
-				sg.Add(makeStudentFromSample());
+				sg.Add(makeStudent());
 
-				cout << "[" << int(i / double(size - 1) * 100) << "%]" << "\b\b\b\b\b";
+				cout << int(i / double(size - 1) * 100) << "% [";
+				for (size_t j = 0; j < 10; j++)
+				{
+					auto t = i / double(size - 1);
+					auto t1 = int(t * 100);
+					if (t1 >= j*10)
+						cout << '=';
+					else
+						cout << ' ';
+				}
+				cout << ']' << '\r';
 			}
 			cout << endl;
 
